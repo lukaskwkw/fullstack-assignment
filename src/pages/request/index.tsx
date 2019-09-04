@@ -19,8 +19,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { avatarLetters } from "../../server/utils";
 
 const useStyles = makeStyles({
-  avatar: {
-    margin: 10
+  extraBottom: {
+    marginBottom: 48
   },
   bigAvatar: {
     margin: 10,
@@ -66,11 +66,23 @@ export default function AddressForm() {
         createCustomer(customer)(dispatch);
       }}
     >
-      <Typography variant="h6" gutterBottom>
-        {(state.creator && "Create customer") || "Customer"}
+      <Typography
+        className={classes.extraBottom}
+        align="center"
+        variant="h4"
+        gutterBottom
+      >
+        {(state.creator && "Create customer") || `${firstName} ${lastName}`}
       </Typography>
       <Grid container spacing={3}>
-        <Grid justify="center" alignItems="center" container xs={12} sm={4}>
+        <Grid
+          className={classes.extraBottom}
+          justify="center"
+          alignItems="center"
+          container
+          xs={12}
+          sm={4}
+        >
           <Avatar className={classes.bigAvatar} alt="Avatar" src={avatar}>
             {avatarLetters(firstName, lastName)}
           </Avatar>

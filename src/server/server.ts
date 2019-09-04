@@ -4,6 +4,9 @@ import * as express from "express";
 import customersSeed from "./seed";
 import { createUuid } from "./utils";
 
+const DEVELOPMENT = process.env.NODE_ENV !== "development";
+const apiPrefix = DEVELOPMENT ? "/api" : "";
+
 const server = express();
 const port = process.env.PORT || 3000;
 
@@ -16,16 +19,12 @@ server.use(bodyParser.json());
 const isAvialable = email =>
   !customers.find(customer => customer.email === email);
 
-server.get("/customers", (req, res) => {
+server.get(`${apiPrefix}/customers`, (req, res) => {
   res.status(200).json(customers);
 });
 
-server.get("/customers/:id", (req, res) => {
+server.get(`${apiPrefix}/customers/:id`, (req, res) => {
   const { id } = req.params;
-  console.info({ id });
-  // if (!id) {
-  //   return res.status(200).json(customers);
-  // }
   const customer = customers.find(customer => customer.id === id);
   if (!customer) {
     return res.status(400).json({ error: "CUSTOMER_NOT_FOUND" });
@@ -33,8 +32,7 @@ server.get("/customers/:id", (req, res) => {
   res.status(200).json(customer);
 });
 
-server.post("/create", (req, res) => {
-  console.info({ body: req.body });
+server.post(`${apiPrefix}/create`, (req, res) => {
   const { email } = req.body;
   if (!isAvialable(email)) {
     return res.status(409).json({ error: "EMAIL_ALREADY_TAKEN" });
