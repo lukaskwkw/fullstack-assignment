@@ -30,6 +30,8 @@ const useStyles = makeStyles({
 });
 
 export default function AddressForm() {
+  let timeoutNotification = null;
+
   const [customer, setCustomer]: [Partial<Customer>, Function] = useState({
     avatar: "",
     firstName: "",
@@ -48,6 +50,14 @@ export default function AddressForm() {
       getCustomer(id, setCustomer)(dispatch);
     }
   }, []);
+
+  useEffect(() => {
+    timeoutNotification = state.timeout;
+    return () => {
+      timeoutNotification = state.timeout;
+      clearTimeout(timeoutNotification);
+    };
+  }, [state.timeout]);
 
   const { avatar, firstName, lastName, email, balance } = customer;
 
@@ -80,6 +90,7 @@ export default function AddressForm() {
           justify="center"
           alignItems="center"
           container
+          item
           xs={12}
           sm={4}
         >
@@ -87,7 +98,7 @@ export default function AddressForm() {
             {avatarLetters(firstName, lastName)}
           </Avatar>
         </Grid>
-        <Grid spacing={3} container xs={12} sm={8}>
+        <Grid spacing={3} container item xs={12} sm={8}>
           <Grid item xs={12}>
             <TextField
               disabled={!state.creator}
@@ -121,6 +132,7 @@ export default function AddressForm() {
               id="email"
               name="email"
               label="Email"
+              type="email"
               fullWidth
               value={email}
               onChange={handleChange("email")}
@@ -132,6 +144,7 @@ export default function AddressForm() {
               disabled={!state.creator}
               id="balance"
               name="balance"
+              type="number"
               label={(state.creator && "Initial balance") || "Balance"}
               fullWidth
               value={balance}

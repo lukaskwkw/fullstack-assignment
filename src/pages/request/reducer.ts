@@ -2,8 +2,11 @@ export const initialState = {
   creator: true,
   busy: false,
   error: false,
-  customerId: false
+  customerId: null,
+  timeout: null
 };
+
+const notificationTime = 5000;
 
 const url = "/api/create";
 
@@ -29,12 +32,23 @@ const responseFeatchSuccess = () => ({
   type: "FETCH_SUCCESS"
 });
 
+export const hideAllNotifications = () => ({
+  type: "HIDE_ALL_NOTIFICATIONS"
+});
+
+const addTimeout = timeout => dispatch =>
+  dispatch({
+    type: "TIMEOUT",
+    timeout: setTimeout(() => dispatch(hideAllNotifications()), timeout)
+  });
+
 export const getCustomer = (id, setCustomer) => dispatch => {
   dispatch(showProfile());
   fetch(`/api/customers/${id}`)
     .then(response => response.json())
     .then(json => {
       if (json.error) {
+        addTimeout(notificationTime)(dispatch);
         return dispatch(responseError(json.error));
       }
       dispatch(responseFeatchSuccess());
@@ -54,6 +68,7 @@ export const createCustomer = customer => dispatch => {
   })
     .then(response => response.json(), error => dispatch(responseError(error)))
     .then(json => {
+      addTimeout(notificationTime)(dispatch);
       if (json.error) {
         return dispatch(responseError(json.error));
       }
@@ -72,6 +87,19 @@ export const customerReducer = (state = initialState, action) => {
   case "FETCH_SUCCESS":
     return {
       ...state,
+      busy: false,
+      error: false
+    };
+  case "TIMEOUT":
+    return {
+      ...state,
+      timeout: action.timeout
+    };
+  case "HIDE_ALL_NOTIFICATIONS":
+    return {
+      ...state,
+      timeout: null,
+      customerId: null,
       busy: false,
       error: false
     };
