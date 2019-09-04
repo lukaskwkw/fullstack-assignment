@@ -1,0 +1,11 @@
+.header {
+  color: #1aa;
+}
+
+.link {
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
+}

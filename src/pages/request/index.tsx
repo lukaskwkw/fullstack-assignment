@@ -1,0 +1,149 @@
+import * as React from "react";
+import { useState, useReducer, useEffect } from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { Customer } from "../../model";
+import {
+  initialState,
+  customerReducer,
+  createCustomer,
+  getCustomer
+} from "./reducer";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import Link from "../../components/Link";
+
+export default function AddressForm() {
+  const [customer, setCustomer]: [Partial<Customer>, Function] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    balance: 0
+  });
+
+  const [state, dispatch] = useReducer(customerReducer, initialState);
+
+  useEffect(() => {
+    const id = location.search.substr(4);
+    if (id) {
+      getCustomer(id, setCustomer)(dispatch);
+    }
+  }, []);
+
+  const { firstName, lastName, email, balance } = customer;
+
+  const handleChange = name => event => {
+    setCustomer({ ...customer, [name]: event.target.value });
+  };
+
+  return (
+    <form
+      method="post"
+      onSubmit={event => {
+        event.preventDefault();
+        if (!state.creator) {
+          return;
+        }
+        createCustomer(customer)(dispatch);
+      }}
+    >
+      <Typography variant="h6" gutterBottom>
+        {(state.creator && "Create customer") || "Customer"}
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            disabled={!state.creator}
+            required
+            id="firstName"
+            name="firstName"
+            label="First name"
+            fullWidth
+            value={firstName}
+            onChange={handleChange("firstName")}
+            autoComplete="fname"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            disabled={!state.creator}
+            required
+            id="lastName"
+            name="lastName"
+            label="Last name"
+            fullWidth
+            value={lastName}
+            onChange={handleChange("lastName")}
+            autoComplete="lname"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            disabled={!state.creator}
+            required
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth
+            value={email}
+            onChange={handleChange("email")}
+            autoComplete="Email"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            disabled={!state.creator}
+            id="balance"
+            name="balance"
+            label={(state.creator && "Initial balance") || "Balance"}
+            fullWidth
+            value={balance}
+            onChange={handleChange("balance")}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          {state.busy && <LinearProgress />}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {(state.creator && (
+            <Button
+              disabled={state.busy}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          )) || (
+            <Button
+              disabled={state.busy}
+              type="submit"
+              variant="contained"
+              onClick={() => console.info("test!")}
+              color="secondary"
+            >
+              Withdraw
+            </Button>
+          )}
+        </Grid>
+      </Grid>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={state.customerId || state.error}
+        message={
+          (state.customerId && (
+            <span id="message-id">
+              Customer has been created:{" "}
+              <Link href={`/customer?id=${state.customerId}`}>
+                {state.customerId}
+              </Link>
+            </span>
+          )) ||
+          (state.error && <span id="message-id">Error: {state.error}</span>)
+        }
+      />
+    </form>
+  );
+}
