@@ -13,6 +13,8 @@ const port = process.env.PORT || 3000;
 const customers = customersSeed;
 
 server.use(express.static("public"));
+server.use("/request", express.static("public"));
+server.use("/customer", express.static("public"));
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
