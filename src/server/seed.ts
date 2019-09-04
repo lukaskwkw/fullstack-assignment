@@ -1,12 +1,15 @@
 import { Customer } from "../model";
 
+const avatarSize = 240;
+const avatarUrl = id => `https://i.pravatar.cc/${avatarSize}?img=${id}`;
+
 const customersSeed: Array<Partial<Customer>> = [
   {
     id: "1",
     firstName: "Ab",
     lastName: "Goakes",
     email: "agoakes0@wsj.com",
-    avatar: "https://i.pravatar.cc/150?img=7",
+    avatar: avatarUrl(7),
     balance: 10674.98
   },
   {
@@ -14,7 +17,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Hally",
     lastName: "Orpin",
     email: "horpin1@paginegialle.it",
-    avatar: "https://i.pravatar.cc/150?img=25",
+    avatar: avatarUrl(25),
     balance: 7002.17
   },
   {
@@ -22,7 +25,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Mace",
     lastName: "Quinnelly",
     email: "mquinnelly2@hatena.ne.jp",
-    avatar: "https://i.pravatar.cc/150?img=18",
+    avatar: avatarUrl(18),
     balance: 9821.53
   },
   {
@@ -30,7 +33,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Lannie",
     lastName: "Jeynes",
     email: "ljeynes3@pcworld.com",
-    avatar: "https://i.pravatar.cc/150?img=50",
+    avatar: avatarUrl(50),
     balance: 8270.45
   },
   {
@@ -38,7 +41,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Keary",
     lastName: "Demaine",
     email: "kdemaine4@clickbank.net",
-    avatar: "https://i.pravatar.cc/150?img=51",
+    avatar: avatarUrl(51),
     balance: 6896.63
   },
   {
@@ -46,7 +49,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Clo",
     lastName: "Teasell",
     email: "cteasell5@live.com",
-    avatar: "https://i.pravatar.cc/150?img=44",
+    avatar: avatarUrl(44),
     balance: 7680.4
   },
   {
@@ -54,7 +57,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Phillie",
     lastName: "Mulqueen",
     email: "pmulqueen6@loc.gov",
-    avatar: "https://i.pravatar.cc/150?img=47",
+    avatar: avatarUrl(47),
     balance: 4097.82
   },
   {
@@ -62,7 +65,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Alejandrina",
     lastName: "Battell",
     email: "abattell7@histats.com",
-    avatar: "https://i.pravatar.cc/150?img=43",
+    avatar: avatarUrl(43),
     balance: 969.87
   },
   {
@@ -70,7 +73,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Orly",
     lastName: "Stiggers",
     email: "ostiggers8@redcross.org",
-    avatar: "https://i.pravatar.cc/150?img=49",
+    avatar: avatarUrl(49),
     balance: 4153.27
   },
   {
@@ -78,7 +81,7 @@ const customersSeed: Array<Partial<Customer>> = [
     firstName: "Igor",
     lastName: "Yegorkov",
     email: "iyegorkov9@wikipedia.org",
-    avatar: "https://i.pravatar.cc/150?img=12",
+    avatar: avatarUrl(12),
     balance: 11763.69
   }
 ];

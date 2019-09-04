@@ -5,9 +5,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Customer } from "../../../model";
 import history from "../../../utils/history";
+import { avatarLetters } from "../../../server/utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 
 const CustomersList = ({ customers }: { customers: Partial<Customer>[] }) => {
   const classes = useStyles("");
-  const matches = useMediaQuery("(min-width:600px)");
 
   function handleListItemClick(id) {
     history.push(`/customer?id=${id}`);
@@ -34,24 +33,20 @@ const CustomersList = ({ customers }: { customers: Partial<Customer>[] }) => {
 
   return (
     <List className={classes.root}>
-      {customers.map(({ id, avatar, firstName, email, lastName, balance }) => (
+      {customers.map(({ id, avatar, firstName, email, lastName }) => (
         <ListItem key={id} button onClick={() => handleListItemClick(id)}>
           <ListItemAvatar>
             <Avatar>
-              <Avatar alt="Avatar" src={avatar} />
+              <Avatar alt="Avatar" src={avatar}>
+                {avatarLetters(firstName, lastName)}
+              </Avatar>
             </Avatar>
           </ListItemAvatar>
           <ListItemText
             className={classes.firstItem}
             primary={email}
-            secondary={`$${balance}`}
+            secondary={`${firstName} ${lastName}`}
           />
-          {matches && (
-            <ListItemText
-              className={classes.secondItem}
-              primary={`${firstName} ${lastName}`}
-            />
-          )}
         </ListItem>
       ))}
     </List>

@@ -7,3 +7,6 @@ export const createUuid = () => {
   });
   return uuid;
 };
+
+export const avatarLetters = (firstName, lastName) =>
+  firstName && firstName[0].concat((lastName && lastName[0]) || "");
