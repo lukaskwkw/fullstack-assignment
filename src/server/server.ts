@@ -53,7 +53,7 @@ server.post(`${apiPrefix}/withdraw`, (req, res) => {
   }
 
   const customerIndex = customers.findIndex(customer => customer.id === id);
-  if (!customerIndex) {
+  if (customerIndex < 0) {
     return res.status(400).json({ error: ErrorList.CUSTOMER_NOT_FOUND });
   }
 

@@ -12,10 +12,10 @@ npm install
 
 ## Running
 
-To build and run app:
+To build and start app:
 
 ```sh
-npm run build-and-run
+npm run build-and-start
 ```
 
 Then open webrowser at [localhost:3000](localhost:3000)
