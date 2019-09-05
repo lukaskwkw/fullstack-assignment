@@ -32,7 +32,7 @@ Then open webrowser at [localhost:8080](localhost:8080)
 
 ## Tests
 
-To start development:
+To start tests:
 
 ```sh
 npm test
