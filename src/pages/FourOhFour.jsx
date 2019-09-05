@@ -1,10 +1,9 @@
 import React from "react";
-import Header from "../components/Header";
 import Link from "../components/Link";
 
 const FourOhFour = () => (
   <>
-    <Header>Page Not Found</Header>
+    <h1>Page Not Found</h1>
     <Link href="/">Main Page</Link>
   </>
 );

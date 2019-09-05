@@ -2,7 +2,7 @@ import React from "react";
 import { PropTypes } from "prop-types";
 import History from "../utils/history";
 
-const Link = ({ href, children }) => {
+const Link = ({ href, children, className }) => {
   const onClick = e => {
     const aNewTab = e.metaKey || e.ctrlKey;
     const anExternalLink = href.startsWith("http");
@@ -14,7 +14,7 @@ const Link = ({ href, children }) => {
   };
 
   return (
-    <a className="link" href={href} onClick={onClick}>
+    <a className={className} href={href} onClick={onClick}>
       {children}
     </a>
   );
@@ -22,6 +22,7 @@ const Link = ({ href, children }) => {
 
 Link.propTypes = {
   href: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
 };
 

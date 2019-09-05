@@ -17,8 +17,6 @@ const App = ({ pathname }) => {
     route => route !== "/" && new RegExp(route).test(page)
   );
 
-  console.info({ found, page });
-
   const Handler = PAGES[found] || PAGES["/404"];
   return (
     <>
@@ -34,12 +32,9 @@ App.propTypes = {
   pathname: PropTypes.oneOf(Object.keys(PAGES)).isRequired
 };
 
-if (typeof window !== "undefined") {
-  console.info("main " + location.pathname);
-  ReactDOM.render(
-    <App pathname={location.pathname} />,
-    document.getElementById("app")
-  );
-}
+ReactDOM.render(
+  <App pathname={location.pathname} />,
+  document.getElementById("app")
+);
 
 export default App;

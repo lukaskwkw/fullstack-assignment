@@ -2,3 +2,15 @@ body {
   margin: 0;
   background-color: #eee;
 }
+
+.link {
+  color: #1aa;
+}
+
+a {
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
+}
