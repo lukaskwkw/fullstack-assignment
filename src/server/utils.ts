@@ -1,3 +1,8 @@
+export enum ErrorList {
+  CUSTOMER_NOT_FOUND = "CUSTOMER_NOT_FOUND",
+  EMAIL_ALREADY_TAKEN = "EMAIL_ALREADY_TAKEN"
+}
+
 export const createUuid = () => {
   let dt = new Date().getTime();
   const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
