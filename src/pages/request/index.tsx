@@ -218,7 +218,7 @@ export default function AddressForm() {
         </Grid>
       </Grid>
       <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={state.customerId !== null || state.error != null}
         message={
           (state.customerId && (
