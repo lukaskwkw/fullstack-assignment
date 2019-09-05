@@ -47,7 +47,7 @@ export default function AddressForm() {
     creator: true
   });
 
-  const [amountToWithdraw, setAmountToWithdraw] = useState(0);
+  const [amountToWithdraw, setAmountToWithdraw] = useState();
 
   const { customer } = state;
 
