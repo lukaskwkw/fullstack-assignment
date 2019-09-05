@@ -6,12 +6,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import { Customer } from "../../model";
-import {
-  initialState,
-  customerReducer,
-  createCustomer,
-  getCustomer
-} from "./reducer";
+import { initialState, customerReducer } from "./reducer";
+import { createCustomer, getCustomer } from "./actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Link from "../../components/Link";

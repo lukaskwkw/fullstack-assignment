@@ -1,6 +1,7 @@
 import { Customer } from "../model";
 
 const avatarSize = 240;
+
 const avatarUrl = id => `https://i.pravatar.cc/${avatarSize}?img=${id}`;
 
 const customersSeed: Array<Partial<Customer>> = [
