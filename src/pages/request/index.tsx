@@ -60,13 +60,13 @@ export default function AddressForm() {
     }
   }, []);
 
-  useEffect(() => {
-    timeoutNotification = state.timeout;
-    return () => {
+  useEffect(
+    () => () => {
       timeoutNotification = state.timeout;
       clearTimeout(timeoutNotification);
-    };
-  }, [state.timeout]);
+    },
+    [state.timeout]
+  );
 
   const { id, avatar, firstName, lastName, email, balance } = customer;
 

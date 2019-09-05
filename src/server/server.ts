@@ -9,8 +9,8 @@ const isAvialable = (email, customers) =>
 
 const customers = customersSeed;
 
-const DEVELOPMENT = process.env.NODE_ENV !== "development";
-const apiPrefix = DEVELOPMENT ? "/api" : "";
+const DEVELOPMENT = process.env.NODE_ENV === "development";
+const apiPrefix = DEVELOPMENT ? "" : "/api";
 
 const server = express();
 const port = process.env.PORT || 3000;

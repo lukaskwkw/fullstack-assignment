@@ -28,7 +28,7 @@ const ButtonAppBar = ({ children }) => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            App
+            <Link href="/">App</Link>
           </Typography>
           {children}
           <Button color="inherit">

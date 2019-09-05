@@ -49,7 +49,7 @@ describe("customer reducer", async assert => {
 
         assert({
           given: "correct customer id with dispatch",
-          should: "retrive state with correct customer from the server",
+          should: "return state with correct customer from the server",
           actual: stateAfter,
           expected: { ...state, customer: expectedCustomer }
         });
@@ -72,9 +72,9 @@ describe("customer reducer", async assert => {
         const [stateAfter] = result.current;
 
         assert({
-          given: "wrong correct customer id with dispatch",
+          given: "wrong customer id with dispatch",
           should:
-            "retrive state with error from the server and with set timeout for notification",
+            "return state with error from the server and with set timeout for notification",
           actual: { ...stateAfter, timeout: 5000 },
           expected: {
             ...state,
@@ -103,7 +103,7 @@ describe("customer reducer", async assert => {
         assert({
           given: "all request data to createCustomer",
           should:
-            "retrive state with generated customerId from the server and with set timeout for notification",
+            "return state with generated customerId from the server and with set timeout for notification",
           actual: { ...stateAfter, timeout: 5000 },
           expected: {
             ...state,
@@ -132,7 +132,7 @@ describe("customer reducer", async assert => {
           given:
             "all request data but with already used email to createCustomer",
           should:
-            "retrive state with error from the server and with set timeout for notification",
+            "return state with error from the server and with set timeout for notification",
           actual: { ...stateAfter, timeout: 5000 },
           expected: {
             ...state,
