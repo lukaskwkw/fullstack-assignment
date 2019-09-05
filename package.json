@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "webpack-dev-server --config ./webpack.client.js --mode development",
     "dev:server": "cross-env NODE_ENV=development nodemon",
-    "test": "riteway -r @babel/register -r @babel/polyfill -r ts-node/register 'src/**/*.test.ts'",
+    "test": "riteway -r @babel/register -r @babel/polyfill -r ts-node/register \"src/**/*.test.ts\"",
     "format": "prettier --write \"**/*.{js,jsx,tsx,css,scss,md}\""
   },
   "author": "Łukasz Kwiecień",
