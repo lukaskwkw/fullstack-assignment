@@ -1,13 +1,12 @@
 import * as React from "react";
-import { useState, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-import { Customer } from "../../model";
 import { initialState, customerReducer } from "./reducer";
-import { createCustomer, getCustomer } from "./actions";
+import { createCustomer, fillCustomer, getCustomer } from "./actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Link from "../../components/Link";
@@ -28,22 +27,16 @@ const useStyles = makeStyles({
 export default function AddressForm() {
   let timeoutNotification = null;
 
-  const [customer, setCustomer]: [Partial<Customer>, Function] = useState({
-    avatar: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    balance: 0
-  });
-
   const [state, dispatch] = useReducer(customerReducer, initialState);
+
+  const { customer } = state;
 
   const classes = useStyles("");
 
   useEffect(() => {
     const id = location.search.substr(4);
     if (id) {
-      getCustomer(id, setCustomer)(dispatch);
+      getCustomer(id)(dispatch);
     }
   }, []);
 
@@ -57,9 +50,8 @@ export default function AddressForm() {
 
   const { avatar, firstName, lastName, email, balance } = customer;
 
-  const handleChange = name => event => {
-    setCustomer({ ...customer, [name]: event.target.value });
-  };
+  const handleChange = name => event =>
+    dispatch(fillCustomer({ ...customer, [name]: event.target.value }));
 
   return (
     <form

@@ -2,6 +2,7 @@ import { Customer } from "../../model";
 
 export enum TypeKeys {
   CREATE_CUSTOMER = "CREATE_CUSTOMER",
+  FILL_PROFILE = "FILL_PROFILE",
   SHOW_PROFILE = "SHOW_PROFILE",
   ERROR_RESPONSE = "ERROR_RESPONSE",
   CREATION_SUCCESS = "CREATION_SUCCESS",
@@ -12,12 +13,17 @@ export enum TypeKeys {
 
 const notificationTime = 5000;
 
-const createUrl = "/api/create";
+export const createUrl = "/api/create";
 
 export const fetchCustomerUrl = id => `/api/customers/${id}`;
 
 const requestCustomer = () => ({
   type: TypeKeys.CREATE_CUSTOMER
+});
+
+export const fillCustomer = customer => ({
+  type: TypeKeys.FILL_PROFILE,
+  customer
 });
 
 const showProfile = () => ({
@@ -49,10 +55,10 @@ const addTimeout = timeout => dispatch =>
   });
 
 interface GetCustomer {
-  (id: string, size: Function): (dispatch: Function) => Promise<Response>;
+  (id: string): (dispatch: Function) => Promise<Response>;
 }
 
-export const getCustomer: GetCustomer = (id, setCustomer) => dispatch => {
+export const getCustomer: GetCustomer = id => dispatch => {
   dispatch(showProfile());
 
   return fetch(fetchCustomerUrl(id))
@@ -63,7 +69,7 @@ export const getCustomer: GetCustomer = (id, setCustomer) => dispatch => {
         return dispatch(responseError(json.error));
       }
       dispatch(responseFetchSuccess());
-      setCustomer(json);
+      dispatch(fillCustomer(json));
     });
 };
 
