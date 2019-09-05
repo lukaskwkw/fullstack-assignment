@@ -1,3 +1,5 @@
+import { Customer } from "../../model";
+
 export enum TypeKeys {
   CREATE_CUSTOMER = "CREATE_CUSTOMER",
   SHOW_PROFILE = "SHOW_PROFILE",
@@ -12,7 +14,7 @@ const notificationTime = 5000;
 
 const createUrl = "/api/create";
 
-const fetchCustomerUrl = id => `/api/customers/${id}`;
+export const fetchCustomerUrl = id => `/api/customers/${id}`;
 
 const requestCustomer = () => ({
   type: TypeKeys.CREATE_CUSTOMER
@@ -46,9 +48,14 @@ const addTimeout = timeout => dispatch =>
     timeout: setTimeout(() => dispatch(hideAllNotifications()), timeout)
   });
 
-export const getCustomer = (id, setCustomer) => dispatch => {
+interface GetCustomer {
+  (id: string, size: Function): (dispatch: Function) => Promise<Response>;
+}
+
+export const getCustomer: GetCustomer = (id, setCustomer) => dispatch => {
   dispatch(showProfile());
-  fetch(fetchCustomerUrl(id))
+
+  return fetch(fetchCustomerUrl(id))
     .then(response => response.json())
     .then(json => {
       if (json.error) {
@@ -60,9 +67,14 @@ export const getCustomer = (id, setCustomer) => dispatch => {
     });
 };
 
-export const createCustomer = customer => dispatch => {
+interface CreateCustomer {
+  (customer: Partial<Customer>): (dispatch: Function) => Promise<Response>;
+}
+
+export const createCustomer: CreateCustomer = customer => dispatch => {
   dispatch(requestCustomer());
-  fetch(createUrl, {
+
+  return fetch(createUrl, {
     method: "POST",
     body: JSON.stringify(customer),
     headers: {

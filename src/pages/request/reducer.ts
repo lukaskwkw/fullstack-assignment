@@ -3,12 +3,15 @@ import { TypeKeys } from "./actions";
 export const initialState = {
   creator: true,
   busy: false,
-  error: false,
+  error: null,
   customerId: null,
   timeout: null
 };
 
-export const customerReducer = (state = initialState, action) => {
+export const customerReducer = (
+  state = initialState,
+  action = { type: null, error: null, timeout: null, customerId: null }
+) => {
   switch (action.type) {
   case TypeKeys.CREATE_CUSTOMER:
     return { ...state, creator: true, busy: true };
@@ -19,7 +22,7 @@ export const customerReducer = (state = initialState, action) => {
   case TypeKeys.FETCH_SUCCESS:
     return {
       ...state,
-      busy: false,
+      busy: true,
       error: false
     };
   case TypeKeys.TIMEOUT:

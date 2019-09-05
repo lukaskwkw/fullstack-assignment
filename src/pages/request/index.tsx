@@ -159,9 +159,6 @@ export default function AddressForm() {
             />
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {state.busy && <LinearProgress />}
-        </Grid>
         <Grid item xs={12} sm={6}>
           {(state.creator && (
             <Button
@@ -183,6 +180,9 @@ export default function AddressForm() {
               Withdraw
             </Button>
           )}
+        </Grid>
+        <Grid item xs={12}>
+          {state.busy && <LinearProgress />}
         </Grid>
       </Grid>
       <Snackbar
