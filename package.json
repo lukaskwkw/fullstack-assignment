@@ -1,5 +1,5 @@
 {
-  "name": "Assignment",
+  "name": "Assignment – Full Stack Developer",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.jsx",
@@ -11,10 +11,9 @@
     "dev:client": "webpack-dev-server --config ./webpack.client.js --mode development",
     "dev:server": "NODE_ENV=development nodemon",
     "test": "riteway -r @babel/register -r @babel/polyfill -r ts-node/register 'src/**/*.test.ts'",
-    "format": "prettier --write \"**/*.{js,jsx,tsx,css,scss,md}\"",
-    "server": "node ./src/server.js"
+    "format": "prettier --write \"**/*.{js,jsx,tsx,css,scss,md}\""
   },
-  "author": "",
+  "author": "Łukasz Kwiecień",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.5.5",

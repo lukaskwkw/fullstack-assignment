@@ -1,15 +1,4 @@
-# Canvas-2d-library
-
-Canvas 2d library with support of physic (gravity, spring, orbiting). This library is a ongoing result of "Coding Math" youtube series. Project is based on my [boirelplate](https://github.com/lukaskwkw/wrepp-boilerplate/) with addition of typescript support
-
-## Current status:
-
-- Support of plane boundaries crossing: (bouncingBoundires, moveToOtherSide, emmitter, removeDeadParticles).
-- Basic particle physics (gravity, spring, orbiting).
-- Particle basic movements, acceleration, rotation.
-- Reimplemation of default bezier functions - quadric, bezier (additional - multiquadric), with new functions you can iterate through steps (move objects along the bezier line)
-- Support many customable rendeners with animations i.e. pulse, alpha, lissajous curves
-- Particles Drag and drop support
+# Assignment – Full Stack Developer
 
 ## Prerequisites:
 
@@ -23,43 +12,28 @@ npm install
 
 ## Running
 
-Start development server:
-
-```sh
-npm run start:dev
-```
-
-Open webrowser at [localhost:8080](localhost:8080)
-
-Start production server:
-
-```sh
-npm run start
-```
-
-with pre-build
+To build and run app:
 
 ```sh
 npm run build-and-run
 ```
 
-Open webrowser at [localhost:3000](localhost:3000)
+Then open webrowser at [localhost:3000](localhost:3000)
 
-## Building
+## Development
 
-client
-
-```sh
-npm run build-client
-```
-
-server
+To start development:
 
 ```sh
-npm run build-server
+npm run dev
 ```
 
-## To-do:
+Then open webrowser at [localhost:8080](localhost:8080)
 
-- Particle collision support
-- Add docker support
+## Tests
+
+To start development:
+
+```sh
+npm test
+```

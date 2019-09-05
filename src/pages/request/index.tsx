@@ -100,13 +100,13 @@ export default function AddressForm() {
           container
           item
           xs={12}
-          sm={4}
+          md={4}
         >
           <Avatar className={classes.bigAvatar} alt="Avatar" src={avatar}>
             {avatarLetters(firstName, lastName)}
           </Avatar>
         </Grid>
-        <Grid spacing={3} container item xs={12} sm={8}>
+        <Grid spacing={3} container item xs={12} md={8}>
           <Grid item xs={12}>
             <TextField
               disabled={!state.creator}
@@ -170,8 +170,8 @@ export default function AddressForm() {
               onChange={handleChange("avatar")}
             />
           </Grid>
-          <Grid item xs={12} sm={6}></Grid>
-          <Grid className={classes.lastRow} item xs={12} sm={6}>
+          <Grid item xs={12} md={6}></Grid>
+          <Grid className={classes.lastRow} item xs={12} md={6}>
             {(state.creator && (
               <Button
                 disabled={state.busy}
