@@ -1,15 +1,15 @@
 {
-  "name": "Assignment – Full Stack Developer",
+  "name": "assignment",
   "version": "1.0.0",
-  "description": "",
+  "description": "Assignment – Full Stack Developer",
   "main": "src/index.jsx",
   "scripts": {
     "start": "ts-node ./src/server/server.ts",
-    "biuld-and-start": "npm run build-client && npm run start",
-    "build-client": "NODE_ENV=production webpack --config ./webpack.client.js --mode production",
+    "build-and-start": "npm run build-client && npm run start",
+    "build-client": "cross-env NODE_ENV=production webpack --config ./webpack.client.js --mode production",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "webpack-dev-server --config ./webpack.client.js --mode development",
-    "dev:server": "NODE_ENV=development nodemon",
+    "dev:server": "cross-env NODE_ENV=development nodemon",
     "test": "riteway -r @babel/register -r @babel/polyfill -r ts-node/register 'src/**/*.test.ts'",
     "format": "prettier --write \"**/*.{js,jsx,tsx,css,scss,md}\""
   },
@@ -27,6 +27,7 @@
     "@typescript-eslint/parser": "^2.0.0",
     "babel-loader": "^8.0.6",
     "concurrently": "^4.1.2",
+    "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
     "eslint": "^6.3.0",
     "eslint-plugin-react": "^7.14.3",
