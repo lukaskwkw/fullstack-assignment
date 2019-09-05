@@ -8,7 +8,9 @@ import {
   createUrl,
   getCustomer,
   fetchCustomerUrl,
-  createCustomer
+  createCustomer,
+  withDrawBalanceUrl,
+  withdrawBalance
 } from "./actions";
 import customersSeed from "../../server/seed";
 import { ErrorList } from "../../server/utils";
@@ -136,6 +138,34 @@ describe("customer reducer", async assert => {
             ...state,
             error: ErrorList.EMAIL_ALREADY_TAKEN,
             timeout: stateAfter.timeout && 5000
+          }
+        });
+      });
+    });
+  }
+
+  {
+    const response = { newBalance: 200 };
+    const id = "3";
+    fetchMock.reset();
+    fetchMock.post(withDrawBalanceUrl, response);
+
+    const { result } = renderHook(() =>
+      useReducer(customerReducer, initialState)
+    );
+    const [state, dispatch] = result.current;
+
+    act(() => {
+      withdrawBalance(id, 1000)(dispatch).then(() => {
+        const [stateAfter] = result.current;
+
+        assert({
+          given: "request for withdraw balance",
+          should: "get new balance state form server and update reducer state",
+          actual: { ...stateAfter },
+          expected: {
+            ...state,
+            customer: { ...state.customer, balance: response.newBalance }
           }
         });
       });

@@ -5,15 +5,13 @@
   "main": "src/index.jsx",
   "scripts": {
     "start": "ts-node ./src/server/server.ts",
+    "biuld-and-start": "npm run build-client && npm run start",
+    "build-client": "NODE_ENV=production webpack --config ./webpack.client.js --mode production",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "webpack-dev-server --config ./webpack.client.js --mode development",
     "dev:server": "NODE_ENV=development nodemon",
-    "build-client": "NODE_ENV=production webpack --config ./webpack.client.js --mode production",
-    "lint:css": "stylelint '**/*.scss'",
-    "pretest": "npm run lint:css",
     "test": "riteway -r @babel/register -r @babel/polyfill -r ts-node/register 'src/**/*.test.ts'",
     "format": "prettier --write \"**/*.{js,jsx,tsx,css,scss,md}\"",
-    "posttest": "npm run format",
     "server": "node ./src/server.js"
   },
   "author": "",
@@ -57,8 +55,7 @@
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
-    "webpack-merge": "^4.2.2",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@material-ui/core": "^4.3.3",

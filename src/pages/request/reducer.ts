@@ -1,6 +1,7 @@
 import { TypeKeys } from "./actions";
+import { Customer } from "../../model";
 
-const customerDefault = {
+const customerDefault: Customer = {
   id: "",
   avatar: "",
   firstName: "",
@@ -21,11 +22,12 @@ export const initialState = {
 export const customerReducer = (state = initialState, action) => {
   switch (action.type) {
   case TypeKeys.CREATE_CUSTOMER:
-    return { ...state, creator: true, busy: true };
+    return { ...state, customerId: null, creator: true, busy: true };
   case TypeKeys.SHOW_PROFILE:
+  case TypeKeys.WITHDRAW_BALANCE:
     return { ...state, creator: false, busy: true };
   case TypeKeys.FILL_PROFILE:
-    return { ...state, customer: action.customer };
+    return { ...state, customer: { ...state.customer, ...action.customer } };
   case TypeKeys.ERROR_RESPONSE:
     return { ...state, busy: false, error: action.error };
   case TypeKeys.FETCH_SUCCESS:

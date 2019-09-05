@@ -1,12 +1,17 @@
 import * as React from "react";
-import { useReducer, useEffect } from "react";
+import { useState, useReducer, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import { initialState, customerReducer } from "./reducer";
-import { createCustomer, fillCustomer, getCustomer } from "./actions";
+import {
+  createCustomer,
+  fillCustomer,
+  getCustomer,
+  withdrawBalance
+} from "./actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Link from "../../components/Link";
@@ -21,13 +26,28 @@ const useStyles = makeStyles({
     margin: 10,
     width: 240,
     height: 240
+  },
+  lastRow: {
+    display: "flex",
+    justifyContent: "flex-end",
+    "& div": {
+      marginRight: 8
+    },
+    "& button": {
+      alignSelf: "center"
+    }
   }
 });
 
 export default function AddressForm() {
   let timeoutNotification = null;
 
-  const [state, dispatch] = useReducer(customerReducer, initialState);
+  const [state, dispatch] = useReducer(customerReducer, {
+    ...initialState,
+    creator: true
+  });
+
+  const [amountToWithdraw, setAmountToWithdraw] = useState(0);
 
   const { customer } = state;
 
@@ -48,7 +68,7 @@ export default function AddressForm() {
     };
   }, [state.timeout]);
 
-  const { avatar, firstName, lastName, email, balance } = customer;
+  const { id, avatar, firstName, lastName, email, balance } = customer;
 
   const handleChange = name => event =>
     dispatch(fillCustomer({ ...customer, [name]: event.target.value }));
@@ -150,36 +170,56 @@ export default function AddressForm() {
               onChange={handleChange("avatar")}
             />
           </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid className={classes.lastRow} item xs={12} sm={6}>
+            {(state.creator && (
+              <Button
+                disabled={state.busy}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Submit
+              </Button>
+            )) || (
+              <>
+                <TextField
+                  id="withdraw-balance"
+                  name="withdraw-balance"
+                  type="number"
+                  label={"Amount to withdraw"}
+                  fullWidth
+                  value={amountToWithdraw}
+                  onChange={event => {
+                    if (parseFloat(event.target.value) >= 0) {
+                      setAmountToWithdraw(+event.target.value);
+                    }
+                  }}
+                />
+                <Button
+                  disabled={state.busy}
+                  type="submit"
+                  variant="contained"
+                  onClick={() =>
+                    amountToWithdraw > 0 &&
+                    withdrawBalance(id, amountToWithdraw)(dispatch)
+                  }
+                  color="secondary"
+                >
+                  Withdraw
+                </Button>
+              </>
+            )}
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          {(state.creator && (
-            <Button
-              disabled={state.busy}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Submit
-            </Button>
-          )) || (
-            <Button
-              disabled={state.busy}
-              type="submit"
-              variant="contained"
-              onClick={() => console.info("test!")}
-              color="secondary"
-            >
-              Withdraw
-            </Button>
-          )}
-        </Grid>
+
         <Grid item xs={12}>
           {state.busy && <LinearProgress />}
         </Grid>
       </Grid>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={state.customerId || state.error}
+        open={state.customerId !== null || state.error != null}
         message={
           (state.customerId && (
             <span id="message-id">

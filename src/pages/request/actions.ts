@@ -2,6 +2,7 @@ import { Customer } from "../../model";
 
 export enum TypeKeys {
   CREATE_CUSTOMER = "CREATE_CUSTOMER",
+  WITHDRAW_BALANCE = "WITHDRAW_BALANCE",
   FILL_PROFILE = "FILL_PROFILE",
   SHOW_PROFILE = "SHOW_PROFILE",
   ERROR_RESPONSE = "ERROR_RESPONSE",
@@ -14,6 +15,8 @@ export enum TypeKeys {
 const notificationTime = 5000;
 
 export const createUrl = "/api/create";
+
+export const withDrawBalanceUrl = `/api/withdraw/`;
 
 export const fetchCustomerUrl = id => `/api/customers/${id}`;
 
@@ -95,5 +98,30 @@ export const createCustomer: CreateCustomer = customer => dispatch => {
         return dispatch(responseError(json.error));
       }
       dispatch(responseCreationSuccess(json.customerId));
+    });
+};
+
+interface WithDrawBalance {
+  (id: string, amount: number): (dispatch: Function) => Promise<Response>;
+}
+
+export const withdrawBalance: WithDrawBalance = (id, amount) => dispatch => {
+  dispatch({ type: TypeKeys.WITHDRAW_BALANCE });
+  return fetch(withDrawBalanceUrl, {
+    method: "POST",
+    body: JSON.stringify({ id, amount }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => response.json(), error => dispatch(responseError(error)))
+    .then(json => {
+      if (json.error) {
+        addTimeout(notificationTime)(dispatch);
+        return dispatch(responseError(json.error));
+      }
+      dispatch(responseFetchSuccess());
+      dispatch(fillCustomer({ balance: json.newBalance }));
     });
 };
