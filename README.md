@@ -1,5 +1,7 @@
 # Assignment – Full Stack Developer
 
+![](screen1.png)
+
 ## Prerequisites:
 
 [NodeJS v12.2.0](https://nodejs.org/en/)
